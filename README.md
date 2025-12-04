@@ -14,6 +14,7 @@ This template is a minimal, production-ready React application built with Vite. 
 The goal is to create isolated, secure microVMs for individual features - not to replicate your entire production stack (though we're working on ways to support large-scale integrations). Supernova's AI will generate code based on this template, using your components to produce authentic, production-grade outputs that adhere to your coding and design guidelines.
 
 By customizing this template, you'll enable:
+
 - **Real code backing**: Features built with your company's libraries, digestible by tools like VS Code or Cursor through Supernova's remote MCP connector.
 - **Native feel**: Prototypes that blend seamlessly with your platform.
 - **Guideline alignment**: Outputs optimized for your internal standards.
@@ -35,6 +36,7 @@ If you have any questions, please use the dedicated Slack channel we've created 
 1. **Clone the Repository**: Clone this repository to your local machine.
 
 2. **Install Base Dependencies**:
+
    ```bash
    npm install
    ```
@@ -50,12 +52,12 @@ In order for Supernova to be able to use your container properly, two modes need
 To test the dev mode, simply:
 
 ```bash
-npm run vite
+npm run dev
 ```
 
 Dev mode runs on `http://localhost:3000`, and no other port is allowed. Add some example components into the `src/app.tsx` and verify that your components render correctly by navigating to the localhost URL. Additionally, verify that there are no console log issues both in the terminal and in the browser console, so these errors don't propagate into the features your consumers will build.
 
-### Production mode 
+### Production mode
 
 When your consumers share links to the apps they built, they are sharing apps built in production mode. This package comes with this routine configured, simply run:
 
@@ -80,7 +82,7 @@ To ensure compatibility with Supernova agentic system:
 {
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build"  
+    "build": "tsc -b && vite build"
   }
 }
 ```
@@ -91,7 +93,7 @@ To ensure compatibility with Supernova agentic system:
 
 ### Project Structure
 
-Following is the project structure to maintain: 
+Following is the project structure to maintain:
 
 ```
 .
@@ -110,6 +112,7 @@ Following is the project structure to maintain:
 ## Customization
 
 ### Adding Components
+
 Create `src/components/` and export your components for AI use. The AI will detect and use these in generated prototypes.
 
 ### Configuring main.tsx
@@ -117,15 +120,16 @@ Create `src/components/` and export your components for AI use. The AI will dete
 Add providers, wrappers, and global setup here to ensure consistency across prototypes. Examples:
 
 - **Basic Providers**:
+
   ```tsx
   // main.tsx
-  import React from 'react';
-  import ReactDOM from 'react-dom/client';
-  import { ThemeProvider } from '@your-company/design-system';
-  import App from './app.tsx';
-  import './index.css';
+  import React from "react";
+  import ReactDOM from "react-dom/client";
+  import { ThemeProvider } from "@your-company/design-system";
+  import App from "./app.tsx";
+  import "./index.css";
 
-  ReactDOM.createRoot(document.getElementById('root')!).render(
+  ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <ThemeProvider>
         <App />
@@ -135,22 +139,23 @@ Add providers, wrappers, and global setup here to ensure consistency across prot
   ```
 
 - **With State Management and Analytics**:
+
   ```tsx
   // main.tsx
-  import React from 'react';
-  import ReactDOM from 'react-dom/client';
-  import { Provider as ReduxProvider } from 'react-redux';
-  import { store } from './store'; // Your Redux store
-  import { AnalyticsProvider } from '@your-company/analytics';
-  import { ErrorBoundary } from '@your-company/utils';
-  import App from './app.tsx';
-  import './index.css';
+  import React from "react";
+  import ReactDOM from "react-dom/client";
+  import { Provider as ReduxProvider } from "react-redux";
+  import { store } from "./store"; // Your Redux store
+  import { AnalyticsProvider } from "@your-company/analytics";
+  import { ErrorBoundary } from "@your-company/utils";
+  import App from "./app.tsx";
+  import "./index.css";
 
   // Initialize analytics
-  import { initAnalytics } from '@your-company/analytics';
-  initAnalytics({ env: 'development' });
+  import { initAnalytics } from "@your-company/analytics";
+  initAnalytics({ env: "development" });
 
-  ReactDOM.createRoot(document.getElementById('root')!).render(
+  ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <ReduxProvider store={store}>
         <AnalyticsProvider>
@@ -174,6 +179,7 @@ If you are already using `.cursorrules` or similar, you can just copy and paste 
 - **Storybook Examples**: Add usage examples in `/supernova/storybook/`. Include just the story code files (e.g., `Button.stories.tsx`) - no need to build or run Storybook. The AI uses these as references for component implementation.
 
 ## Authentication & Security
+
 Supernova handles authentication automatically in sandboxes and production on the system level and you should not attempt to build any kind of authentication to them yourself - it is not necessary. Sandboxes and production microVMs automatically adhere to the access rules team can set on workspace or project level.
 
 ## Uploading the template to Supernova
@@ -182,7 +188,7 @@ Supernova handles authentication automatically in sandboxes and production on th
 2. Use Supernova CLI command to upload the template to our system (will be provided by Supernova separately once you create the package).
 3. Commit all changes to the repo, trigger the action to upload or upload manually from the command line.
 
-Once uploaded, Supernova uses the template and other enhancements on the Supernova side to turn all of it into a reusable container forming a base of each microVM that will host the prototypes/front-ends. Prototypes compile into static apps, hosted at unique URLs with only essential code. To use your container, select the new option you'll see post-upload in the Project Context setting. 
+Once uploaded, Supernova uses the template and other enhancements on the Supernova side to turn all of it into a reusable container forming a base of each microVM that will host the prototypes/front-ends. Prototypes compile into static apps, hosted at unique URLs with only essential code. To use your container, select the new option you'll see post-upload in the Project Context setting.
 
 Note that **once you have selected the container in Project Context, other options like styling etc. will no longer be available** - since your package is fully responsible for distributing everything needed to render the design system.
 
