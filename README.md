@@ -50,7 +50,7 @@ In order for Supernova to be able to use your container properly, two modes need
 To test the dev mode, simply:
 
 ```bash
-npm run dev
+npm run vite
 ```
 
 Dev mode runs on `http://localhost:3000`, and no other port is allowed. Add some example components into the `src/app.tsx` and verify that your components render correctly by navigating to the localhost URL. Additionally, verify that there are no console log issues both in the terminal and in the browser console, so these errors don't propagate into the features your consumers will build.
