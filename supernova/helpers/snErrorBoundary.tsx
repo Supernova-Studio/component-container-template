@@ -122,6 +122,7 @@ export class SnErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
     }
 
     if (window.parent && window.parent !== window) {
+      const urlWithoutExtraPath = `${window.location.origin}/${window.location.pathname.split("/").at(1)}`;
       window.parent.postMessage(
         {
           source: "prototype",
@@ -130,6 +131,7 @@ export class SnErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
             message: error?.message ?? "Unknown error",
             stack: error?.stack,
             componentStack: errorInfo.componentStack,
+            url: urlWithoutExtraPath,
           },
         },
         "*"
@@ -144,7 +146,7 @@ export class SnErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
         <div style={containerStyle}>
           <img src={snError} alt="Error illustration" style={imageStyle} />
           <div style={titleStyle}>Something went wrong</div>
-          <p style={messageStyle}>Try refreshing or fixing with Supernova AI </p>
+          <p style={messageStyle}>Try refreshing or fixing with Supernova AI</p>
           <button
             style={buttonStyle}
             onClick={() => window.location.reload()}
