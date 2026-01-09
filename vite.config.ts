@@ -23,6 +23,7 @@ export default defineConfig({
     commonjsOptions: {
       include: [/private-deps/, /node_modules/],
     },
+    minify: false,
   },
 });
 
