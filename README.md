@@ -234,7 +234,7 @@ supernova/
 - Each template lives in its **own folder** under `supernova/templates/`
 - The **folder name** is the template identifier (e.g. `PortalHome`)
 - The **main component file must match the folder name** exactly: `PortalHome/PortalHome.tsx`
-- The display name is derived automatically from the folder name: `PortalHome` → `"Portal Home"`, `AppShell` → `"App Shell"`
+- The display name is derived automatically from the folder name: `PortalHome` → `"Portal Home"`, `AppShell` → `"App Shell"` when you run CLI with `--discover` flag ([more details](#descriptions))
 
 ### Patterns
 
@@ -255,6 +255,8 @@ thumbnail.jpeg
 
 ### Descriptions
 
+Run `supernova template-upload --discover` to extract descriptions.
+
 The CLI extracts descriptions in this priority order:
 
 1. **Individual `README.md`** — first paragraph after the `#` heading:
@@ -274,6 +276,10 @@ The CLI extracts descriptions in this priority order:
    ```
 
 3. **Fallback** — if neither is found, a generic description is generated.
+
+Once discovery is done, you `package.json` will be updated. Feel free to adjust configuration and push to repo. Keep in mind the consecutive discovery run will override it.
+
+You can also run `supernova template-upload --discover --workspace-id=<id> --design-system-id=<id>` to immediately discover and upload templates
 
 ## Authentication & Security
 
