@@ -1,6 +1,6 @@
 # Supernova Custom Codebase Integration Guide
 
-Welcome to the Supernova integration template! This guide provides a clear, step-by-step process for setting up and customizing a headless container for your micro-frontends. It's designed as a blank canvas where you can integrate your company's code components, design systems, and configurations. Supernova uses this code container to generate prototypes and features that feel native to your production environment, enabling seamless ideation, iteration, and delivery.
+Welcome to the Supernova integration template! This guide provides a clear, step-by-step process for setting up and customizing a headless container for your micro-frontends. It's designed as a blank canvas where you can integrate your company's code components, design systems, and configurations. Supernova uses this template to generate prototypes and features that feel native to your production environment, enabling seamless ideation, iteration, and delivery.
 
 ## What is This?
 
@@ -78,7 +78,7 @@ When your consumers share links to the apps they built, they are sharing apps bu
 npm run build
 ```
 
-Verify that the build command is successful once you have finalized building the code container. By default, all outputs go to `dist/` and you should be able to see the built static app inside the `dist` folder with the example components you've put into `src/app.tsx`.
+Verify that the build command is successful once you have finalized building the template. By default, all outputs go to `dist/` and you should be able to see the built static app inside the `dist` folder with the example components you've put into `src/app.tsx`.
 
 ### Post-validation
 
@@ -88,7 +88,7 @@ Once you have verified that everything is set up and you can run both dev and bu
 
 To ensure compatibility with Supernova agentic system:
 
-- **Use Vite Exclusively**. Vite is the only supported bundler. Do not replace it with Webpack, Rollup, or others. The code container is pre-configured - extend it as needed, but keep core settings intact.
+- **Use Vite Exclusively**. Vite is the only supported bundler. Do not replace it with Webpack, Rollup, or others. The template is pre-configured - extend it as needed, but keep core settings intact.
 - **Package.json** must contain these exact scripts:
 
 ```json
@@ -193,7 +193,7 @@ Supernova analyzes these files to guide AI. You can copy content from existing r
 
 - **Storybook Examples**: Add usage examples in `/supernova/storybook/`. Include just the story code files (e.g., `Button.stories.tsx`) – no need to build or run Storybook. The AI uses these as references for component implementation.
 
-### Adding Project Templates
+### Adding Layout Templates
 
 Layout templates are optional full-page components used by Supernova to guide prototype generation.
 
@@ -240,13 +240,13 @@ For full conventions (description extraction order, naming behavior, transitive 
 
 Supernova handles authentication automatically in sandboxes and production on the system level and you should not attempt to build any kind of authentication to them yourself - it is not necessary. Sandboxes and production microVMs automatically adhere to the access rules team can set on workspace or project level.
 
-## Uploading the code container to Supernova
+## Uploading the template to Supernova
 
 1. Generate a Supernova API token and add it to your GitHub repo secrets.
-2. Use Supernova CLI command to upload the code container to our system (will be provided by Supernova separately once you create the package).
+2. Use Supernova CLI command to upload the template to our system (will be provided by Supernova separately once you create the package).
 3. Commit all changes to the repo, trigger the action to upload or upload manually from the command line.
 
-Once uploaded, Supernova uses the code container and other enhancements on the Supernova side to turn all of it into a reusable container forming a base of each microVM that will host the prototypes/front-ends. Prototypes compile into static apps, hosted at unique URLs with only essential code. To use your container, select the new option you'll see post-upload in the Project Context setting.
+Once uploaded, Supernova uses the template and other enhancements on the Supernova side to turn all of it into a reusable container forming a base of each microVM that will host the prototypes/front-ends. Prototypes compile into static apps, hosted at unique URLs with only essential code. To use your container, select the new option you'll see post-upload in the Project Context setting.
 
 Note that **once you have selected the container in Project Context, other options like styling etc. will no longer be available** - since your package is fully responsible for distributing everything needed to render the design system.
 
