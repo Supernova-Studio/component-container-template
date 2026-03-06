@@ -165,6 +165,7 @@ Add providers, wrappers, and global setup here to ensure consistency across prot
   import "./index.css";
 
   // Initialize analytics
+  import { initAnalytics } from "@your-company/analytics";
   initAnalytics({ env: "development" });
 
   ReactDOM.createRoot(document.getElementById("root")!).render(
