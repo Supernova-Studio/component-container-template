@@ -146,6 +146,7 @@ Add providers, wrappers, and global setup here to ensure consistency across prot
     <React.StrictMode>
       <ThemeProvider>
         <App />
+      </ThemeProvider>
     </React.StrictMode>
   );
   ```
