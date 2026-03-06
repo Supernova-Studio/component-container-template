@@ -11,7 +11,7 @@ This template is a minimal, production-ready React application built with Vite. 
 - Basic CSS variables for theming.
 - A simple project structure.
 
-The goal is to create isolated, secure microVMs for individual features - not to replicate your entire production stack (though we're working on ways to support large-scale integrations). Supernova's AI will create prototype, using your components to produce authentic, production-grade outputs that adhere to your coding and design guidelines.
+The goal is to create isolated, secure microVMs for individual features - not to replicate your entire production stack (though we're working on ways to support large-scale integrations). Supernova's AI will generate code based on this template, using your components to produce authentic, production-grade outputs that adhere to your coding and design guidelines.
 
 By customizing this template, you'll enable:
 
