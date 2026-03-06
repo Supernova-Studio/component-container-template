@@ -195,6 +195,92 @@ Supernova analyzes these files to guide AI. You can copy content from existing r
 
 - **Storybook Examples**: Add usage examples in `/supernova/storybook/`. Include just the story code files (e.g., `Button.stories.tsx`) – no need to build or run Storybook. The AI uses these as references for component implementation.
 
+# Layout Templates
+
+Layout templates are full-page UI components that Supernova uses to help AI generate prototypes. This guide explains how to structure your templates and patterns so the CLI can automatically discover and register them.
+
+## Directory Structure
+
+Templates and reusable patterns live inside a `supernova/` directory at the root of your component container:
+
+```
+supernova/
+├── templates/
+│   ├── README.md              # Optional: table of all templates with descriptions
+│   ├── AppShell/
+│   │   ├── AppShell.tsx       # Main component file — must match folder name
+│   │   ├── thumbnail.png      # Optional preview image
+│   │   └── README.md          # Optional description
+│   └── PortalHome/
+│       ├── PortalHome.tsx
+│       ├── thumbnail.png
+│       ├── assets/
+│       │   └── grid_animation.json
+│       └── README.md
+└── patterns/
+    ├── README.md              # Optional: table of all patterns with descriptions
+    ├── PromptEditor/
+    │   ├── PromptEditor.tsx   # Main component file — must match folder name
+    │   ├── mockData.ts
+    │   └── README.md          # Optional description
+    └── SharePopover/
+        └── SharePopover.tsx
+```
+
+## Conventions
+
+### Templates
+
+- Each template lives in its **own folder** under `supernova/templates/`
+- The **folder name** is the template identifier (e.g. `PortalHome`)
+- The **main component file must match the folder name** exactly: `PortalHome/PortalHome.tsx`
+- The display name is derived automatically from the folder name: `PortalHome` → `"Portal Home"`, `AppShell` → `"App Shell"` when you run CLI with `--discover` flag ([more details](#descriptions))
+
+### Patterns
+
+- Reusable components shared across templates live under `supernova/patterns/`
+- Same naming rules apply: folder name matches the main component file
+- Patterns are automatically included in any template that imports them
+
+### Thumbnails
+
+Place a thumbnail image directly inside the template or pattern folder. Supported file names:
+
+```
+thumbnail.png
+thumbnail.svg
+thumbnail.jpg
+thumbnail.jpeg
+```
+
+### Descriptions
+
+Run `supernova template-upload --discover` to extract descriptions.
+
+The CLI extracts descriptions in this priority order:
+
+1. **Individual `README.md`** — first paragraph after the `#` heading:
+
+   ```markdown
+   # PortalHome
+
+   The Portal home page with Create/Ask mode switching.
+   ```
+
+2. **Directory-level `README.md` table** — a markdown table in `supernova/templates/README.md` or `supernova/patterns/README.md`:
+
+   ```markdown
+   | Template   | Description                          |
+   | ---------- | ------------------------------------ |
+   | PortalHome | Portal home page with mode switching |
+   ```
+
+3. **Fallback** — if neither is found, a generic description is generated.
+
+Once discovery is done, you `package.json` will be updated. Feel free to adjust configuration and push to repo. Keep in mind the consecutive discovery run will override it.
+
+You can also run `supernova template-upload --discover --workspace-id=<id> --design-system-id=<id>` to immediately discover and upload templates
+
 ## Authentication & Security
 
 Supernova handles authentication automatically in sandboxes and production on the system level and you should not attempt to build any kind of authentication to them yourself - it is not necessary. Sandboxes and production microVMs automatically adhere to the access rules team can set on workspace or project level.
