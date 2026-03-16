@@ -94,7 +94,7 @@ To ensure compatibility with Supernova agentic system:
 ```json
 {
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0 --port 3000 --strictPort",
     "build": "tsc -b && vite build"
   }
 }
