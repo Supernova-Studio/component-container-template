@@ -103,6 +103,7 @@ To ensure compatibility with Supernova agentic system:
 - For **Port and Build Output**, dev server must run on **port 3000** (set in `vite.config.ts` - do not change). Builds must output to `dist/` using `npm run build`.
 - **Static Assets** should go to `public/`. Vite handles serving and inclusion automatically. If you want to use them in prototypes, serve them from this location, and reference relative to the root of the domain.
 - **Vite Configuration** can be extended by changing `vite.config.ts`, but do not remove required plugins or change the base project path.
+- **Prototyping Tooling**: The `@supernovaio/prototyping-tooling` plugin is required and must remain in the Vite configuration. It must be placed before the React plugin in the plugins array to ensure proper metadata injection into JSX elements. This plugin enables design-time features like element selection, annotation, and live editing through iframe communication.
 
 ### Project Structure
 

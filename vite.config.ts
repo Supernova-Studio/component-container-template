@@ -1,11 +1,12 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build";
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [errorMonitorPlugin(), react()],
+  plugins: [supernovaDesignPlugin(), errorMonitorPlugin(), react()],
   server: {
     port: 3000,
     allowedHosts: true,
