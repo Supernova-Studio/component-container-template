@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./app.tsx";
 import { SnPrototype } from "../supernova/helpers/snPrototype";
+import "@supernovaio/prototyping-tooling/client"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
