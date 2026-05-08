@@ -1,9 +1,15 @@
 // Information for LLM Agent
 // This is a component that handles errors in the application.
 // don't update this file!
-import { Component, type CSSProperties, type ErrorInfo, type ReactNode } from "react";
-import snError from "./sn-error.svg";
-import snRefreshIcon from "./sn-refresh-icon.svg";
+import {
+  Component,
+  type CSSProperties,
+  type ErrorInfo,
+  type ReactNode,
+} from "react"
+
+import snError from "./sn-error.svg"
+import snRefreshIcon from "./sn-refresh-icon.svg"
 
 const containerStyle: CSSProperties = {
   display: "flex",
@@ -15,27 +21,28 @@ const containerStyle: CSSProperties = {
   backgroundColor: "white",
   color: "black",
 
-  fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-};
+  fontFamily:
+    "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+}
 
 const imageStyle: CSSProperties = {
   maxWidth: "440px",
   maxHeight: "280px",
   marginBottom: "12px",
-};
+}
 
 const titleStyle: CSSProperties = {
   fontSize: "20px",
   lineHeight: "28px",
   fontWeight: 600,
   marginBottom: "4px",
-};
+}
 
 const messageStyle: CSSProperties = {
   fontSize: "14px",
   lineHeight: "20px",
   color: "#66728A",
-};
+}
 
 const buttonStyle: CSSProperties = {
   display: "flex",
@@ -54,16 +61,16 @@ const buttonStyle: CSSProperties = {
   lineHeight: "20px",
   minHeight: "36px",
   marginTop: "24px",
-};
+}
 
 const buttonHoverStyle: CSSProperties = {
   backgroundColor: "rgba(96, 97, 98, 0.09)",
-};
+}
 
 const refreshIconStyle: CSSProperties = {
   width: "16px",
   height: "16px",
-};
+}
 
 const linkStyle: CSSProperties = {
   fontSize: "14px",
@@ -73,11 +80,11 @@ const linkStyle: CSSProperties = {
   marginTop: "8px",
   marginBottom: "24px",
   fontFamily: "inherit",
-};
+}
 
 const linkHoverStyle: CSSProperties = {
   textDecoration: "underline",
-};
+}
 
 const stackStyle: CSSProperties = {
   fontSize: "0.85rem",
@@ -89,39 +96,44 @@ const stackStyle: CSSProperties = {
   whiteSpace: "pre-wrap",
   color: "#BE0021",
   background: "rgba(255, 43, 83, 0.09)",
-};
+}
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
-  error: Error | null;
-  showErrorDetails: boolean;
+  hasError: boolean
+  error: Error | null
+  showErrorDetails: boolean
 }
 
-export class SnErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class SnErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   state: ErrorBoundaryState = {
     hasError: false,
     error: null,
     showErrorDetails: false,
-  };
+  }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return {
       hasError: true,
       error: error,
       showErrorDetails: false,
-    };
+    }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     if (typeof window === "undefined") {
-      return;
+      return
     }
 
     if (window.parent && window.parent !== window) {
+      const urlWithoutExtraPath = `${window.location.origin}/${window.location.pathname.split("/").at(1)}`
+
       window.parent.postMessage(
         {
           source: "prototype",
@@ -130,59 +142,70 @@ export class SnErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
             message: error?.message ?? "Unknown error",
             stack: error?.stack,
             componentStack: errorInfo.componentStack,
-            url: window.location.href,
+            url: urlWithoutExtraPath,
           },
         },
         "*"
-      );
+      )
     }
   }
 
   render(): ReactNode {
     if (this.state.hasError) {
-      console.error(this.state.error);
+      console.error(this.state.error)
       return (
         <div style={containerStyle}>
           <img src={snError} alt="Error illustration" style={imageStyle} />
           <div style={titleStyle}>Something went wrong</div>
-          <p style={messageStyle}>Try refreshing or fixing with Supernova AI </p>
+          <p style={messageStyle}>
+            Try refreshing or fixing with Supernova AI{" "}
+          </p>
           <button
             style={buttonStyle}
             onClick={() => window.location.reload()}
-            onMouseEnter={e => {
-              Object.assign(e.currentTarget.style, buttonHoverStyle);
+            onMouseEnter={(e) => {
+              Object.assign(e.currentTarget.style, buttonHoverStyle)
             }}
-            onMouseLeave={e => {
-              e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor as string;
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor =
+                buttonStyle.backgroundColor as string
             }}
           >
-            <img src={snRefreshIcon} alt="Refresh icon" style={refreshIconStyle} />
+            <img
+              src={snRefreshIcon}
+              alt="Refresh icon"
+              style={refreshIconStyle}
+            />
             Refresh Page
           </button>
           {this.state.error?.stack && (
             <>
               <a
                 style={linkStyle}
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState({ showErrorDetails: !this.state.showErrorDetails });
+                onClick={(e) => {
+                  e.preventDefault()
+                  this.setState({
+                    showErrorDetails: !this.state.showErrorDetails,
+                  })
                 }}
-                onMouseEnter={e => {
-                  Object.assign(e.currentTarget.style, linkHoverStyle);
+                onMouseEnter={(e) => {
+                  Object.assign(e.currentTarget.style, linkHoverStyle)
                 }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.textDecoration = "none";
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.textDecoration = "none"
                 }}
               >
                 {this.state.showErrorDetails ? "Hide error" : "Show error"}
               </a>
-              {this.state.showErrorDetails && <pre style={stackStyle}>{this.state.error.stack}</pre>}
+              {this.state.showErrorDetails && (
+                <pre style={stackStyle}>{this.state.error.stack}</pre>
+              )}
             </>
           )}
         </div>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }
