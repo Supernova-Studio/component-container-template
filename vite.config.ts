@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
-import { defineConfig } from "vite";
-import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build";
+import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build"
+
+import react from "@vitejs/plugin-react"
+
+import { resolve } from "path"
+import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -26,31 +28,31 @@ export default defineConfig({
       include: [/private-deps/, /node_modules/],
     },
   },
-});
+})
 
 type BuildError = {
-  message: string;
-  stack?: string;
-  id?: string;
-  plugin?: string;
-  loc?: any;
-  frame?: string;
-  timestamp: number;
-};
+  message: string
+  stack?: string
+  id?: string
+  plugin?: string
+  loc?: any
+  frame?: string
+  timestamp: number
+}
 
 export function errorMonitorPlugin(): any {
-  let currentErrors: BuildError[] = [];
-  let lastUpdate = Date.now();
+  let currentErrors: BuildError[] = []
+  let lastUpdate = Date.now()
 
   return {
     name: "error-monitor",
     configureServer(server: any) {
       // Add the healthcheck endpoint (authentication handled by middleware via cookies)
       server.middlewares.use("/__healthcheck", (_req: any, res: any) => {
-        res.setHeader("Content-Type", "application/json");
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Content-Type", "application/json")
+        res.setHeader("Access-Control-Allow-Origin", "*")
 
-        const hasErrors = currentErrors.length > 0;
+        const hasErrors = currentErrors.length > 0
 
         res.end(
           JSON.stringify(
@@ -62,13 +64,13 @@ export function errorMonitorPlugin(): any {
               timestamp: Date.now(),
             },
             null,
-            2,
-          ),
-        );
-      });
+            2
+          )
+        )
+      })
 
       // Override the original send method to catch all HMR messages
-      const originalSend = server.ws.send;
+      const originalSend = server.ws.send
       server.ws.send = function (payload: any) {
         // Capture error messages
         if (
@@ -84,18 +86,18 @@ export function errorMonitorPlugin(): any {
             loc: payload.err?.loc,
             frame: payload.err?.frame,
             timestamp: Date.now(),
-          };
+          }
 
           // Add or update error
           const existingIndex = currentErrors.findIndex(
-            (e) => e.id === error.id,
-          );
+            (e) => e.id === error.id
+          )
           if (existingIndex >= 0) {
-            currentErrors[existingIndex] = error;
+            currentErrors[existingIndex] = error
           } else {
-            currentErrors.push(error);
+            currentErrors.push(error)
           }
-          lastUpdate = Date.now();
+          lastUpdate = Date.now()
         }
 
         // Clear errors on successful updates
@@ -104,19 +106,19 @@ export function errorMonitorPlugin(): any {
           typeof payload === "object" &&
           payload.type === "update"
         ) {
-          currentErrors = [];
-          lastUpdate = Date.now();
+          currentErrors = []
+          lastUpdate = Date.now()
         }
 
-        return originalSend.call(this, payload);
-      };
+        return originalSend.call(this, payload)
+      }
     },
 
     // Hook into transform errors
     async transform(_code: any, id: any) {
       try {
         // This will be called for each file transformation
-        return null;
+        return null
       } catch (err) {
         const error = {
           message: err.message,
@@ -124,18 +126,18 @@ export function errorMonitorPlugin(): any {
           id: id,
           timestamp: Date.now(),
           type: "transform",
-        };
+        }
 
-        currentErrors.push(error);
-        lastUpdate = Date.now();
-        throw err; // Re-throw to maintain normal error flow
+        currentErrors.push(error)
+        lastUpdate = Date.now()
+        throw err // Re-throw to maintain normal error flow
       }
     },
 
     // Clear errors on successful builds
     buildStart() {
-      currentErrors = [];
-      lastUpdate = Date.now();
+      currentErrors = []
+      lastUpdate = Date.now()
     },
-  };
+  }
 }
