@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
-import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build"
+import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -61,8 +62,8 @@ export function errorMonitorPlugin(): any {
               timestamp: Date.now(),
             },
             null,
-            2
-          )
+            2,
+          ),
         );
       });
 
@@ -87,7 +88,7 @@ export function errorMonitorPlugin(): any {
 
           // Add or update error
           const existingIndex = currentErrors.findIndex(
-            (e) => e.id === error.id
+            (e) => e.id === error.id,
           );
           if (existingIndex >= 0) {
             currentErrors[existingIndex] = error;
