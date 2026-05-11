@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { supernovaDesignPlugin } from "@supernovaio/prototyping-tooling/build"
 
 import react from "@vitejs/plugin-react"
